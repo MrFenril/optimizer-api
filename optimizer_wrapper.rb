@@ -26,6 +26,7 @@ require './util/job_manager.rb'
 
 require './lib/routers/router_wrapper.rb'
 require './lib/interpreters/multi_modal.rb'
+require './lib/interpreters/multi_trips.rb'
 require './lib/interpreters/periodic_visits.rb'
 require './lib/interpreters/split_clustering.rb'
 require './lib/interpreters/compute_several_solutions.rb'
@@ -180,6 +181,10 @@ module OptimizerWrapper
       # Split/Clusterize the problem if to large
       split_services_vrps = Interpreters::SplitClustering.split_clusters([service_vrp])
     }.flatten.compact
+    definitive_service_vrps.each{ |service_vrp|
+      multi = Interpreters::MultiTrips.new
+      multi.expand(service_vrp[:vrp])
+    }
     result = solve(definitive_service_vrps, services_fleets, job, block)
     result_global = {
       result: [result] + duplicated_results
