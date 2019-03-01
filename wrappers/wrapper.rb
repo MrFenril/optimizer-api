@@ -539,7 +539,7 @@ module Wrappers
       unfeasible << (1..service.visits_number).collect{ |index|
         {
           original_service_id: service[:id],
-          service_id: service.visits_number == 1 ? service[:id] : "#{service.id}_#{index}_#{service.visits_number}",
+          service_id: "#{service.id}_#{index}_#{service.visits_number}",
           point_id: service[:activity] ? service[:activity][:point_id] : nil,
           detail:{
             lat: service[:activity] && service[:activity][:point][:location] ? service[:activity][:point][:location][:lat] : nil,
