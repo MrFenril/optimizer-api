@@ -392,6 +392,14 @@ class RealCasesTest < Minitest::Test
       # Check elapsed time
       assert result[:elapsed] < 10000, "Too long elapsed time: #{result[:elapsed]}"
     end
+
+    def test_spliting
+      service_vrp = Marshal.load(File.binread('test/fixtures/service_vrp_dichotomious.dump'))
+      service_vrp[:vrp].preprocessing_max_split_size = 250
+
+
+      r = OptimizerWrapper::define_process([service_vrp])
+    end
   end
 
 end
