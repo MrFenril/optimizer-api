@@ -188,7 +188,7 @@ module OptimizerWrapper
       result: ([result] + duplicated_results + split_results + dicho_results).compact
     }
     result_global[:csv] = true if result_global[:result].any?{ |result| result && result[:csv] == true }
-    Result.set(job, result_global)
+    Result.set(job, result_global) if job
     result_global[:result].size > 1 ? result_global[:result] : result_global[:result].first
   end
 
