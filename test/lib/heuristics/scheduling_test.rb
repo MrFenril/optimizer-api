@@ -442,4 +442,11 @@ class HeuristicTest < Minitest::Test
     result = OptimizerWrapper.wrapper_vrp('demo', {services: {vrp: [:demo]}}, FCT.create(problem), nil)
     assert result[:routes].collect{ |route| route[:activities].collect{ |activity| activity[:detail][:skills] }.compact.flatten}.all?{ |skill| skill.size == 1 }
   end
+
+  def test_total_distance_and_travel_time
+    vrp = FCT.load_vrp(self, fixture_file: 'instance_800unaffected_clustered.json')
+
+    result = OptimizerWrapper.wrapper_vrp('demo', {services: {vrp: [:demo]}}, vrp, nil)
+    assert result[:routes].all?{ |route| route[:total_travel_time] && route[:total_distance] }
+  end
 end
